@@ -1,0 +1,6 @@
+scripts/untrackedcode
+outputs
+data/yida
+.ipynb_checkpoints
+__pycache__
+viz
