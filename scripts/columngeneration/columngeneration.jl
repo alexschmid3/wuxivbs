@@ -1,9 +1,6 @@
 
-
 include("initializenetwork.jl")
-include("solvesubproblem_recursion.jl")
 include("solvesubproblem_initialenum.jl")
-include("solvesubproblem_loop.jl")
 
 """
 Function to get transfer order-time-hub nodes id of each order j 
@@ -149,7 +146,7 @@ function columngeneration()
     # Define z_r: A boolean variable array
     z_r = Dict()
 	for rr in 1:r
-	    global z_r[rr] = @variable(rmp, lower_bound = 0) #upper bound implied by ordersserved constraint                      
+	    z_r[rr] = @variable(rmp, lower_bound = 0) #upper bound implied by ordersserved constraint                      
 	    set_name(z_r[rr], string("z_r[",rr,"]")) 
 	end
     # Define vehicle_no: An integer variable constrained between 0 and W
@@ -186,7 +183,7 @@ function columngeneration()
 
     println("********************* Begin column generation *********************")
 
-    while cg_iter <= 1000
+    while cg_iter <= 10000
 
 		#-------------SOLVE RMP-------------#
 

@@ -40,6 +40,7 @@ function Create_time_space_nodes_and_arcs(W::Int)
     n_location_s[s] = TOTAL_Station + 1
     time_s[s] = ceil(T_0 / unit)
     
+    #Transfer nodes for each order; each node = (order, station, time)
     for jj = 1:n
         order = oset[jj]
         F_start_j[jj] = typemax(Int)
@@ -115,7 +116,7 @@ function Create_time_space_nodes_and_arcs(W::Int)
             #println("$num_dp DP DONE! The Totmin is $(interval_dp.value / (1000 * 60)) or Totsec: $(interval_dp.value / 1000)") # ??
 
             if (interval_dp.value / 1000) > Time_longest_dp
-                Time_longest_dp = (interval_dp.value / 1000) # !!!! Note sure here
+                Time_longest_dp = (interval_dp.value / 1000) 
                 #println("Updating Time_longest_dp ~~~~~~~~~~~~~~~~~~~~~~~~~~ to: ", Time_longest_dp) # ??
             end
 
@@ -180,8 +181,7 @@ function Create_time_space_nodes_and_arcs(W::Int)
     
     
     #Original code ==> very slow!
-    #=
-    for s_1 in 1:s # Start_and_End
+    #=for s_1 in 1:s # Start_and_End
         for s_2 in 1:s
             if (n_location_s[s_1] == 0 && n_location_s[s_2] != 0 && n_location_s[s_2] != TOTAL_Station + 1) # 230502
                 if time_s[s_1] == time_s[s_2]

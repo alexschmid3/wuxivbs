@@ -190,28 +190,14 @@ if method == "ip"
 
     printsolutioninfo(r_opt)
 
-elseif (method == "cg") & (referencelines_flag == 1)
-
-    #Initialize instance
-    initializenetwork_reflines(W) 
-    ffset = get_transfer_pickf(f)
-    fjset = get_transfer_pick_dropj(n, f)
-
-    #Solve LO via CG
-    cg_obj, cg_time, cg_iter, mptime, sptime = columngeneration_reflines()
-
-    #Solve IO with CG routes
-    ip_obj, gap, ub, r_opt, ip_time, vehicles_used, customers_served, customers_transferred = solve_network_model_cg(W)
-    totaltime = cg_time + ip_time
-
-    printsolutioninfo(r_opt)
-
 elseif method == "cg"
 
     if referencelines_flag == 1
-    
-        #Initialize time-space network
-        initializenetwork_reflines(W) 
+
+        throw(DomainError(method, "No method = 'cg' if referencelines_flag = 1"))
+        
+        #Not functional
+        #=initializenetwork_reflines(W) 
         ffset = get_transfer_pickf(f)
         fjset = get_transfer_pick_dropj(n, f)
 
@@ -220,7 +206,7 @@ elseif method == "cg"
 
         #Solve IO with CG routes
         ip_obj, gap, ub, r_opt, ip_time, vehicles_used, customers_served, customers_transferred = solve_network_model_cg(W)
-        totaltime = cg_time + ip_time   
+        totaltime = cg_time + ip_time =#  
 
     elseif referencelines_flag == 0
 
@@ -242,7 +228,7 @@ elseif method == "cg"
 
 end
 
-#Visualization
+#Visualization and detour calculation
 detour = processropt(r_opt, 1800, 1800)
 
 #Tally the total number of routes

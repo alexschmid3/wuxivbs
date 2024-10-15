@@ -50,10 +50,6 @@ for line in 1:size(data)[1]
 end
 λ_orig = (sum(arrivaltimes).value / 1000) / length(arrivaltimes)
 
-function getpoissonrand(λ)
-    return 
-end
-
 #Generate a new file
 orderindex = 1
 λ = 600 / targetordersper10min
