@@ -91,7 +91,6 @@ numlines = W                                                    # number of refe
 #Reporting
 viz_flag = 0
 gurobioutput_flag = 0
-
 outputfoldername = "outputs"
 outputfilename = string(outputfoldername,"/output_exp", experiment_id,".csv")
 if !(isdir(outputfoldername))
@@ -195,18 +194,6 @@ elseif method == "cg"
     if referencelines_flag == 1
 
         throw(DomainError(method, "No method = 'cg' if referencelines_flag = 1"))
-        
-        #Not functional
-        #=initializenetwork_reflines(W) 
-        ffset = get_transfer_pickf(f)
-        fjset = get_transfer_pick_dropj(n, f)
-
-        #Solve LO via CG
-        cg_obj, cg_time, cg_iter, mptime, sptime = columngeneration_reflines()
-
-        #Solve IO with CG routes
-        ip_obj, gap, ub, r_opt, ip_time, vehicles_used, customers_served, customers_transferred = solve_network_model_cg(W)
-        totaltime = cg_time + ip_time =#  
 
     elseif referencelines_flag == 0
 
@@ -268,4 +255,3 @@ df = DataFrame(experiment_id = [experiment_id],
                 detour = [detour])
                              
 CSV.write(outputfilename, df) #, append=true)
-
